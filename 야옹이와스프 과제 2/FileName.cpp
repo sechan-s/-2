@@ -47,6 +47,8 @@ int main(void) {
     int b = 2; // 친밀도
     int mood = 3; //기분 (0~3)
     int potatosoup = 0, mushroomsoup = 0, broccolisoup = 0;
+    int position = 2; // 처음 위치는 가운데
+    int toy_exists = 1; // 놀이기구가 있다고 가정
 
 
 
@@ -66,6 +68,62 @@ int main(void) {
         printf(" ==================================================\n");
 
         Sleep(500);
+
+
+        // 이동 처리
+        if (mood == 0) {
+            printf("기분이 매우 나쁜 %s은(는) 집으로 향합니다.\n", str);
+            if (position > HME_POS) position--;
+        }
+        else if (mood == 1) {
+            if (toy_exists) {
+                printf("%s은(는) 심심해서 스크래처 쪽으로 이동합니다.\n", str);
+                if (position > 0) position--;
+            }
+            else {
+                printf("놀거리가 없어서 기분이 매우 나빠집니다.\n");
+                if (mood > 0) mood--;
+            }
+        }
+        else if (mood == 2) {
+            printf("%s은(는) 기분 좋게 식빵을 굽고 있습니다.\n", str);
+        }
+        else if (mood == 3) {
+            printf("%s은(는) 골골송을 부르며 수프를 만들러 갑니다.\n", str);
+            if (position < BWL_PO) position++;
+        }
+
+
+
+        // 수프 생성 (냄비 도착 시)
+        if (position == BWL_PO && mood == 3) {
+            int soup = rand() % 3;
+            printf("%s이(가) ", str);
+            switch (soup) {
+            case 0: printf("감자수프"); potatosoup++; break;
+            case 1: printf("양송이수프"); mushroomsoup++; break;
+            case 2: printf("브로콜리수프"); broccolisoup++; break;
+            }
+            printf("를 만들었습니다!\n");
+            a++;
+        }
+
+        // 맵 출력
+        printf("###############\n");
+        printf("#H     S    B#\n#");
+        for (int i = 0; i < ROOM_WIDTH; i++) {
+            if (i == position) printf("C");
+            else printf(".");
+        }
+        printf("       #\n");
+        printf("###############\n");
+
+
+
+
+
+
+
 
         int d = 0; // 주사위
         int soup = rand() % 3;
@@ -131,11 +189,7 @@ int main(void) {
         
         printf("현재까지 만든 수프: %d개 (감자:%d, 양송이:%d, 브로콜리:%d)\n", a, potatosoup, mushroomsoup, broccolisoup);
 
-        printf("###############\n");
-        printf("#H           B#\n");
-        printf("#.C           #\n");
-        printf("###############\n");
-
+      
 
 
 
