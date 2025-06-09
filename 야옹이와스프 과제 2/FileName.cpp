@@ -20,6 +20,46 @@ void printMood(int mood) {
     }
 }
 
+int getInteractionInput(int toyMouseExists, int toyLaserExists) {
+    int choice = -1;
+
+    while (1) {
+        printf("어떤 상호작용을 하시겠습니까?\n");
+        printf(" 0. 아무것도 하지 않음\n");
+        printf(" 1. 긁어 주기\n");
+
+        int optionNumber = 2;
+        if (toyMouseExists && toyLaserExists) {
+            printf(" 2. 장난감 쥐로 놀아 주기\n");
+            printf(" 3. 레이저 포인터로 놀아 주기\n");
+        }
+        else if (toyMouseExists) {
+            printf(" 2. 장난감 쥐로 놀아 주기\n");
+        }
+        else if (toyLaserExists) {
+            printf(" 2. 레이저 포인터로 놀아 주기\n");
+        }
+
+        printf(">> ");
+
+        scanf_s("%d", &choice);
+
+        if (toyMouseExists && toyLaserExists) {
+            if (choice >= 0 && choice <= 3) break;
+        }
+        else if (toyMouseExists || toyLaserExists) {
+            if (choice >= 0 && choice <= 2) break;
+        }
+        else {
+            if (choice == 0 || choice == 1) break;
+        }
+
+        printf("잘못된 입력입니다. 다시 입력해 주세요.\n");
+    }
+
+    return choice;
+}
+
 
 
 int main(void) {
@@ -242,19 +282,16 @@ int main(void) {
 
         Sleep(500);
 
-        int c = 0;
-        while (1) {
-            printf("\n 어떤 상호작용을 하시겠습니까?  0. 아무것도 하지 않음 1. 긁어 주기\n >> ");
-            scanf_s("%d", &c);
-            if (c == 0 || c == 1) break;
-            else printf("다시 입력해 주세요 (0 또는 1)\n");
-        }
+        // 상호작용 입력 받기
+        int toyMouseExists = 1;  // 예시
+        int toyLaserExists = 0;  // 예시
+        int c = getInteractionInput(toyMouseExists, toyLaserExists);
 
         if (c == 0) {
             printf(" 아무것도 하지 않습니다.\n");
             printf(" 4/6의 확률로 친밀도가 떨어집니다.\n");
 
-            d = rand() % 6 + 1;
+            d = rollDice();
             printf(" 주사위를 굴립니다. 또르륵...\n");
             printf(" %d이(가) 나왔습니다!\n", d);
             if (d <= 4) {
@@ -269,7 +306,7 @@ int main(void) {
             printf(" %s의 턱을 긁어주었습니다.\n", str);
             printf(" 2/6의 확률로 친밀도가 높아집니다.\n");
 
-            d = rand() % 6 + 1;
+            d = rollDice();
             printf(" 주사위를 굴립니다. 또르륵...\n");
             printf(" %d이(가) 나왔습니다!\n", d);
             if (d >= 5) {
@@ -280,8 +317,37 @@ int main(void) {
                 printf(" 친밀도는 그대로입니다.\n");
             }
         }
+        else if (c == 2) {
+            if (toyMouseExists) {
+                printf("장난감 쥐로 놀아 주었습니다.\n");
+                // 추가 로직 작성 가능
+            }
+            else if (toyLaserExists) {
+                printf("레이저 포인터로 놀아 주었습니다.\n");
+                // 추가 로직 작성 가능
+            }
+        }
+        else if (c == 3 && toyMouseExists && toyLaserExists) {
+            printf("레이저 포인터로 놀아 주었습니다.\n");
+            // 추가 로직 작성 가능
+        }
 
         printf(" 현재 친밀도: %d\n", b);
+
+        
+              
+
+               
+
+       
+
+
+
+
+
+
+
+       
 
         Sleep(2500);
         system("cls");
