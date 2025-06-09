@@ -415,6 +415,91 @@ int main(void) {
 
         
               
+        // 상태
+        int cp = 5;  // 예시 CP
+        int toy1 = 0, toy2 = 0, toy3 = 0, toy4 = 0; // 구매 여부
+        int scratcher_x = -1, scratcher_y = -1;
+        int tower_x = -1, tower_y = -1;
+
+        // 맵: 기존 가구 위치 예시
+        int obj1_x = 1, obj1_y = 1; // 예: 집
+        int obj2_x = 3, obj2_y = 1; // 예: 냄비
+
+        // 놀이기구 배치 함수
+        void place_item_randomly(int* x, int* y) {
+            int px, py;
+            do {
+                px = rand() % 5;
+                py = rand() % 4;
+            } while ((px == obj1_x && py == obj1_y) ||
+                (px == obj2_x && py == obj2_y) ||
+                (px == scratcher_x && py == scratcher_y) ||
+                (px == tower_x && py == tower_y));
+            *x = px;
+            *y = py;
+        }
+
+
+
+        void show_store() {
+            int choice;
+            while (1) {
+                printf("상점에서 물건을 살 수 있습니다.\n");
+                printf("어떤 물건을 구매할까요?\n");
+                printf(" 0. 아무 것도 사지 않는다.\n");
+                printf(" 1. 장난감 쥐: 1 CP %s\n", toy1 ? "(품절)" : "");
+                printf(" 2. 레이저 포인터: 2 CP %s\n", toy2 ? "(품절)" : "");
+                printf(" 3. 스크래처: 4 CP %s\n", toy3 ? "(품절)" : "");
+                printf(" 4. 캣 타워: 6 CP %s\n", toy4 ? "(품절)" : "");
+                printf(" >> ");
+                scanf("%d", &choice);
+
+                if (choice < 0 || choice > 4) {
+                    printf("잘못된 입력입니다. 다시 입력하세요.\n");
+                    continue;
+                }
+
+                if (choice == 0) break;
+
+                if ((choice == 1 && toy1) || (choice == 2 && toy2) ||
+                    (choice == 3 && toy3) || (choice == 4 && toy4)) {
+                    printf("이미 구매한 물건입니다.\n");
+                    continue;
+                }
+
+                int cost = 0;
+                char* item = "";
+
+                switch (choice) {
+                case 1: cost = 1; item = "장난감 쥐"; break;
+                case 2: cost = 2; item = "레이저 포인터"; break;
+                case 3: cost = 4; item = "스크래처"; break;
+                case 4: cost = 6; item = "캣 타워"; break;
+                }
+
+                if (cp < cost) {
+                    printf("CP가 부족합니다.\n");
+                    continue;
+                }
+
+                // 구매 처리
+                cp -= cost;
+                if (choice == 1) toy1 = 1;
+                if (choice == 2) toy2 = 1;
+                if (choice == 3) {
+                    toy3 = 1;
+                    place_item_randomly(&scratcher_x, &scratcher_y);
+                }
+                if (choice == 4) {
+                    toy4 = 1;
+                    place_item_randomly(&tower_x, &tower_y);
+                }
+
+                printf("%s를 구매했습니다.\n", item);
+                printf("보유 CP: %d 포인트\n", cp);
+            }
+        }
+
 
                
 
