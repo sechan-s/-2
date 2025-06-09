@@ -287,50 +287,109 @@ int main(void) {
         int toyLaserExists = 0;  // 예시
         int c = getInteractionInput(toyMouseExists, toyLaserExists);
 
-        if (c == 0) {
-            printf(" 아무것도 하지 않습니다.\n");
-            printf(" 4/6의 확률로 친밀도가 떨어집니다.\n");
+        if (c == 0) {  // 아무것도 하지 않음
+            printf("아무것도 하지 않습니다.\n");
 
+            // 기분 -1
+            int prevMood = mood;
+            if (mood > 0) mood--;
+            printf("%s의 기분이 나빠졌습니다: %d -> %d\n", str, prevMood, mood);
+
+            // 친밀도 주사위 5 이하이면 1 감소
             d = rollDice();
-            printf(" 주사위를 굴립니다. 또르륵...\n");
-            printf(" %d이(가) 나왔습니다!\n", d);
-            if (d <= 4) {
-                printf(" 친밀도가 떨어집니다.\n");
+            printf("주사위를 굴립니다. 또르륵...\n");
+            printf("%d이(가) 나왔습니다!\n", d);
+            if (d <= 5) {
+                printf("집사와의 관계가 나빠집니다.\n");
                 if (b > 0) b--;
             }
             else {
-                printf(" 다행히 친밀도가 떨어지지 않았습니다.\n");
+                printf("친밀도는 그대로입니다.\n");
             }
         }
-        else if (c == 1) {
-            printf(" %s의 턱을 긁어주었습니다.\n", str);
-            printf(" 2/6의 확률로 친밀도가 높아집니다.\n");
+        else if (c == 1) {  // 긁어주기
+            printf("%s의 턱을 긁어주었습니다.\n", str);
 
+            // 기분 그대로
+            printf("%s의 기분은 그대로입니다: %d\n", str, mood);
+
+            // 친밀도 주사위 5 이상이면 1 증가
             d = rollDice();
-            printf(" 주사위를 굴립니다. 또르륵...\n");
-            printf(" %d이(가) 나왔습니다!\n", d);
+            printf("주사위를 굴립니다. 또르륵...\n");
+            printf("%d이(가) 나왔습니다!\n", d);
             if (d >= 5) {
-                printf(" 친밀도가 높아집니다.\n");
+                printf("집사와의 관계가 좋아집니다.\n");
                 if (b < 4) b++;
             }
             else {
-                printf(" 친밀도는 그대로입니다.\n");
+                printf("친밀도는 그대로입니다.\n");
             }
         }
-        else if (c == 2) {
+        else if (c == 2) {  // 장난감 쥐로 놀아주기
             if (toyMouseExists) {
-                printf("장난감 쥐로 놀아 주었습니다.\n");
-                // 추가 로직 작성 가능
+                printf("장난감 쥐로 %s와 놀아주었습니다.\n", str);
+
+                // 기분 +1
+                int prevMood = mood;
+                if (mood < 3) mood++;
+                printf("%s의 기분이 조금 좋아졌습니다: %d -> %d\n", str, prevMood, mood);
+
+                // 친밀도 주사위 4 이상이면 1 증가
+                d = rollDice();
+                printf("주사위를 굴립니다. 또르륵...\n");
+                printf("%d이(가) 나왔습니다!\n", d);
+                if (d >= 4) {
+                    printf("집사와의 관계가 좋아집니다.\n");
+                    if (b < 4) b++;
+                }
+                else {
+                    printf("친밀도는 그대로입니다.\n");
+                }
             }
             else if (toyLaserExists) {
-                printf("레이저 포인터로 놀아 주었습니다.\n");
-                // 추가 로직 작성 가능
+                printf("레이저 포인터로 %s와 놀아주었습니다.\n", str);
+
+                // 기분 +2
+                int prevMood = mood;
+                mood += 2;
+                if (mood > 3) mood = 3;
+                printf("%s의 기분이 꽤 좋아졌습니다: %d -> %d\n", str, prevMood, mood);
+
+                // 친밀도 주사위 2 이상이면 1 증가
+                d = rollDice();
+                printf("주사위를 굴립니다. 또르륵...\n");
+                printf("%d이(가) 나왔습니다!\n", d);
+                if (d >= 2) {
+                    printf("집사와의 관계가 좋아집니다.\n");
+                    if (b < 4) b++;
+                }
+                else {
+                    printf("친밀도는 그대로입니다.\n");
+                }
             }
         }
-        else if (c == 3 && toyMouseExists && toyLaserExists) {
-            printf("레이저 포인터로 놀아 주었습니다.\n");
-            // 추가 로직 작성 가능
+        else if (c == 3 && toyMouseExists && toyLaserExists) {  // 레이저 포인터 놀아주기
+            printf("레이저 포인터로 %s와 신나게 놀아주었습니다.\n", str);
+
+            // 기분 +2
+            int prevMood = mood;
+            mood += 2;
+            if (mood > 3) mood = 3;
+            printf("%s의 기분이 꽤 좋아졌습니다: %d -> %d\n", str, prevMood, mood);
+
+            // 친밀도 주사위 2 이상이면 1 증가
+            d = rollDice();
+            printf("주사위를 굴립니다. 또르륵...\n");
+            printf("%d이(가) 나왔습니다!\n", d);
+            if (d >= 2) {
+                printf("집사와의 관계가 좋아집니다.\n");
+                if (b < 4) b++;
+            }
+            else {
+                printf("친밀도는 그대로입니다.\n");
+            }
         }
+
 
         printf(" 현재 친밀도: %d\n", b);
 
@@ -355,4 +414,5 @@ int main(void) {
 
         return 0;
     }
-
+    
+   
