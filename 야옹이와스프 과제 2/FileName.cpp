@@ -32,6 +32,9 @@ int main(void) {
     while (1) {
         printf(" ==================== 현재 상태 ===================\n");
         printf(" 현재까지 만든 수프: %d개\n", a);
+        printf("CP: 0 포인트\n");
+        printf("쫀떡이 기분(0~3): 3\n");
+        printf("  골골송을 부릅니다.\n");
         printf(" 집사와의 관계(0~4): %d\n", b);
         if (b == 0) printf("  곁에 오는 것조차 싫어합니다.\n");
         else if (b == 1) printf("  간식 자판기 취급입니다.\n");
@@ -80,10 +83,15 @@ int main(void) {
 
         printf("현재까지 만든 수프: %d개 (감자:%d, 양송이:%d, 브로콜리:%d)\n", a, potatosoup, mushroomsoup, broccolisoup);
 
-        printf("\n #####\n");
-        printf(" #H B#\n");
-        printf(" #C  #\n");
-        printf(" #####\n");
+        printf("###############\n");
+        printf("#H           B#\n");
+        printf("#.C           #\n");
+        printf("###############\n");
+
+
+
+
+
 
         Sleep(500);
 
