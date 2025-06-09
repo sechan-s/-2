@@ -503,7 +503,39 @@ int main(void) {
 
                
 
-       
+        int turn = 0;  // main 함수 맨 위에 선언 추가
+
+        // while (1) 루프 안 가장 윗부분에 아래 코드 추가:
+        turn++;
+
+        if (turn == 3) {
+            printf("\n[돌발 퀘스트 발생! - 쫀떡이의 숨은 발톱을 찾아라!]\n");
+            printf("쫀떡이가 발톱을 잃어버렸습니다. 숨은 장소는 어딜까요?\n");
+            printf("1. 스크래처 밑\n2. 수프 냄비 뒤\n3. 캣타워 위\n");
+
+            int answer = rand() % 3 + 1; // 정답 위치
+            int guess = 0;
+            while (1) {
+                printf("당신의 선택은? (1~3): ");
+                scanf_s("%d", &guess);
+                if (guess >= 1 && guess <= 3) break;
+                printf("잘못된 입력입니다. 다시 선택하세요.\n");
+            }
+
+            if (guess == answer) {
+                printf("정답입니다! 쫀떡이의 기분이 좋아졌습니다!\n");
+                if (mood < 3) mood++;
+                cp++;
+            }
+            else {
+                printf("틀렸습니다... 쫀떡이의 기분이 나빠졌습니다.\n");
+                if (mood > 0) mood--;
+            }
+
+            Sleep(1500);
+            system("cls");
+        }
+
 
 
 
