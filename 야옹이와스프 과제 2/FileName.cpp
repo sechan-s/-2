@@ -7,7 +7,25 @@
 #define HME_POS    1
 #define BWL_PO     (ROOM_WIDTH - 2)
 
+int rollDice() {
+    return rand() % 6 + 1;  // 1~6 주사위
+}
+
+void printMood(int mood) {
+    switch (mood) {
+    case 0: printf("기분이 매우 나쁩니다.\n"); break;
+    case 1: printf("심심해합니다.\n"); break;
+    case 2: printf("식빵을 굽습니다.\n"); break;
+    case 3: printf("골골송을 부릅니다.\n"); break;
+    }
+}
+
+
+
 int main(void) {
+    srand((unsigned int)time(NULL));
+
+
     printf("****야옹이와 수프****\n");
     printf("      /\\_/\\ \n");
     printf(" /\\  / o o \\ \n");
@@ -27,13 +45,17 @@ int main(void) {
 
     int a = 0; // 수프 개수
     int b = 2; // 친밀도
+    int mood = 3; //기분 (0~3)
     int potatosoup = 0, mushroomsoup = 0, broccolisoup = 0;
+
+
 
     while (1) {
         printf(" ==================== 현재 상태 ===================\n");
         printf(" 현재까지 만든 수프: %d개\n", a);
         printf("CP: 0 포인트\n");
-        printf("쫀떡이 기분(0~3): 3\n");
+        printf("쫀떡이 기분(0~3): %d\n",mood);
+        printMood(mood);
         printf("  골골송을 부릅니다.\n");
         printf(" 집사와의 관계(0~4): %d\n", b);
         if (b == 0) printf("  곁에 오는 것조차 싫어합니다.\n");
@@ -81,6 +103,32 @@ int main(void) {
             printf("집 쪽으로 이동합니다.\n");
         }
 
+        if (d <= 4) {
+            int prevMood = mood;
+            if (mood > 0) mood--;
+            printf("쫀떡의 기분이 나빠집니다: %d -> %d\n", prevMood, mood);
+            printf("아무 이유 없이 기분이 나빠집니다. 고양이니까?\n");
+            printMood(mood);
+
+            // 추가 주사위 굴림(6 - 친밀도 이하이면 또 기분 나빠짐)
+            int d2 = rollDice();
+            printf("추가 주사위를 굴립니다. 또르륵...\n");
+            printf("%d이(가) 나왔습니다!\n", d2);
+            if (d2 <= 6 - b) {
+                prevMood = mood;
+                if (mood > 0) mood--;
+                printf("쫀떡의 기분이 또 나빠집니다: %d -> %d\n", prevMood, mood);
+                printMood(mood);
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         printf("현재까지 만든 수프: %d개 (감자:%d, 양송이:%d, 브로콜리:%d)\n", a, potatosoup, mushroomsoup, broccolisoup);
 
         printf("###############\n");
