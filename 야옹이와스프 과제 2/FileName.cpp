@@ -56,7 +56,7 @@ int main(void) {
         printf(" ==================== 현재 상태 ===================\n");
         printf(" 현재까지 만든 수프: %d개\n", a);
         printf("CP: 0 포인트\n");
-        printf("쫀떡이 기분(0~3): %d\n",mood);
+        printf("쫀떡이 기분(0~3): %d\n", mood);
         printMood(mood);
         printf("  골골송을 부릅니다.\n");
         printf(" 집사와의 관계(0~4): %d\n", b);
@@ -107,6 +107,51 @@ int main(void) {
             printf("를 만들었습니다!\n");
             a++;
         }
+
+        // 오브젝트 상호작용 (이동 후 or 정지 시)
+
+
+        int stayedAtHome = 0;
+       
+            if (position == HME_POS && mood != 0) {
+                static int stayedAtHome = 0;
+                if (stayedAtHome) {
+                    int prevMood = mood;
+                    if (mood < 3) mood++;
+                    printf("%s은(는) 집에서 푹 쉽니다.\n", str);
+                    printf("기분이 좋아졌습니다: %d -> %d\n", prevMood, mood);
+                }
+                else {
+                    printf("%s은(는) 집에 도착했습니다. 다음 턴부터 쉴 수 있습니다.\n", str);
+                    stayedAtHome = 1;
+                }
+            }
+            else {
+                stayedAtHome = 0; // 집이 아닌 곳이면 초기화
+            }
+
+            if (position == 2) { // 스크래처 위치
+                int prevMood = mood;
+                if (mood < 3) mood++;
+                printf("%s은(는) 스크래처를 긁고 놀았습니다.\n", str);
+                printf("기분이 조금 좋아졌습니다: %d -> %d\n", prevMood, mood);
+            }
+
+            if (position == 3) { // 캣타워 위치 (예: 너비 5에서 한 칸 띄운 곳)
+                int prevMood = mood;
+                int gain = (mood <= 1) ? 2 : 3 - mood; // 최대 mood 3까지만
+                mood += gain;
+                printf("%s은(는) 캣타워를 뛰어다닙니다.\n", str);
+                printf("기분이 제법 좋아졌습니다: %d -> %d\n", prevMood, mood);
+            }
+        
+
+
+
+
+
+
+
 
         // 맵 출력
         printf("###############\n");
@@ -179,17 +224,17 @@ int main(void) {
                 printMood(mood);
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         printf("현재까지 만든 수프: %d개 (감자:%d, 양송이:%d, 브로콜리:%d)\n", a, potatosoup, mushroomsoup, broccolisoup);
 
-      
+
 
 
 
@@ -242,5 +287,6 @@ int main(void) {
         system("cls");
     }
 
-    return 0;
-}
+        return 0;
+    }
+
