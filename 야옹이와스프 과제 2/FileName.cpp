@@ -89,6 +89,26 @@ int main(void) {
     int potatosoup = 0, mushroomsoup = 0, broccolisoup = 0;
     int position = 2; // 처음 위치는 가운데
     int toy_exists = 1; // 놀이기구가 있다고 가정
+    int cp = 0;//cp 누적값
+
+
+    // CP 계산
+    int cpProduced = 0;
+    if (mood - 1 > 0) {
+        cpProduced = (mood - 1) + b;
+    }
+    else {
+        cpProduced = b;  // mood - 1 <= 0이면 0 + b
+    }
+
+    // 누적 CP에 더하기
+    cp += cpProduced;
+
+    // 출력
+    printf("쫀떡의 기분(0~3): %d\n", mood);
+    printf("집사와의 친밀도(0~4): %d\n", b);
+    printf("쫀떡의 기분과 친밀도에 따라서 CP가 %d 포인트 생산되었습니다.\n", cpProduced);
+    printf("보유 CP: %d 포인트\n", cp);
 
 
 
