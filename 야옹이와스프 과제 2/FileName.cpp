@@ -5,6 +5,8 @@
 
 
 
+
+
 #define ROOM_WIDTH 5
 #define HME_POS    1
 #define BWL_PO     (ROOM_WIDTH - 2)
